@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Image Compressor</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+	<main class="container">
+		<section class="card">
+			<h1>Image Compressor</h1>
+			<p class="subtitle">Upload AVIF, WebP, JPEG, or PNG and get a compressed version.</p>
+
+			<form action="{{ url_for('index') }}" method="post" enctype="multipart/form-data" class="upload-form">
+				<label for="image" class="file-label">Choose Image</label>
+				<input id="image" type="file" name="image" accept=".png,.jpg,.jpeg,.webp,.avif" required>
+				<button type="submit">Compress Image</button>
+			</form>
+
+			{% if error %}
+				<div class="message error">{{ error }}</div>
+			{% endif %}
+
+			{% if success %}
+				<div class="message success">{{ success }}</div>
+			{% endif %}
+
+			{% if download_url %}
+				<div class="result">
+					<p><strong>Original Size:</strong> {{ original_size_kb }} KB</p>
+					<p><strong>Compressed Size:</strong> {{ compressed_size_kb }} KB</p>
+					<p><strong>Reduction:</strong> {{ reduction_percent }}%</p>
+					<a class="download-btn" href="{{ download_url }}">Download Compressed Image</a>
+				</div>
+			{% endif %}
+		</section>
+	</main>
+</body>
+</html>
